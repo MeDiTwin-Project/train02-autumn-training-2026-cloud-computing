@@ -1,0 +1,61 @@
+# Build the Jupyter Book (docs/) and publish it on GitLab Pages.
+#
+# - Merge requests: build only, so broken content is caught before merging.
+# - Default branch: build and publish to GitLab Pages.
+
+stages:
+  - build
+  - deploy
+
+default:
+  image: python:3.12-slim
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  JUPYTER_BOOK_VERSION: ">=2,<3"
+
+.build_book: &build_book
+  cache:
+    key: pip-$JUPYTER_BOOK_VERSION
+    paths:
+      - .cache/pip
+  before_script:
+    # Jupyter Book 2 (mystmd) needs Node.js >= 18 and npm (Debian packages npm separately),
+    # and `ps` (procps) to stop its temporary build server at the end of the HTML export.
+    - apt-get update -qq && apt-get install -y -qq --no-install-recommends nodejs npm procps > /dev/null
+    - node --version && npm --version
+    - pip install --quiet "jupyter-book$JUPYTER_BOOK_VERSION"
+    - jupyter book --version
+  script:
+    # GitLab Pages serves the site under a sub-path (for example /meditwin-autumn-training-2026),
+    # so the links in the site must use it. CI_PAGES_URL gives the full Pages URL; keep only its path.
+    - export BASE_URL="$(echo "$CI_PAGES_URL" | sed -E 's#^https?://[^/]+##; s#/$##')"
+    - echo "CI_PAGES_URL='$CI_PAGES_URL' -> BASE_URL='$BASE_URL'"
+    - cd docs
+    - jupyter book build --html --ci
+
+build-book:
+  <<: *build_book
+  stage: build
+  artifacts:
+    paths:
+      - docs/_build/html
+    expire_in: 1 week
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+pages:
+  <<: *build_book
+  stage: deploy
+  script:
+    - !reference [.build_book, script]
+    - cd "$CI_PROJECT_DIR"
+    - rm -rf public && cp -r docs/_build/html public
+  artifacts:
+    paths:
+      - public
+  environment:
+    name: pages
+    url: $CI_PAGES_URL
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

@@ -1,0 +1,115 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 61bf1732-d1fe-4f93-a292-c89fc2b12645
+  title: Cloud Computing | MediTwin Autumn Training 2026
+  description: Comprehensive course on cloud computing for MediTwin Autumn Training 2026.
+  keywords:
+    [
+      cloud computing,
+      MediTwin,
+      Autumn Training 2026,
+      Kubernetes,
+      Docker,
+      Security,
+      DevOps,
+      Cloud Architecture,
+      Cloud Services,
+      Cloud Deployment,
+      Cloud Management,
+      CI/CD,
+      Cloud Monitoring,
+      Cloud Optimization,
+      Cloud Scalability,
+      Cloud Performance,
+      Cloud Cost Management,
+      Cloud Automation,
+      Cloud Orchestration,
+      Cloud Networking,
+      Cloud Storage,
+      Cloud Backup and Recovery,
+      Cloud Compliance,
+      Cloud Governance,
+    ]
+
+  # NOTE: the table of contents below is maintained by hand so that the day titles
+  # read well. Do NOT run "jupyter book init --write-toc" — it overwrites this list
+  # with auto-generated titles.
+
+  toc:
+    - file: index.md
+    - title: Agenda
+      children:
+        - file: agenda.md
+    - title: Instructions
+      children:
+        - file: instructions.md
+        - file: laptop-setup.md
+    - title: Day 1 — Cloud Computing Foundations
+      children:
+        - file: day01/index.md
+        - file: day01/00-getting-connected.md
+        - file: day01/01-virtualization.md
+        - file: day01/02-cloud-computing.md
+        - file: day01/03-service-models.md
+        - file: day01/04-openstack.md
+        - file: day01/05-storage.md
+        - file: day01/06-networking.md
+        - file: day01/07-apis.md
+        - file: day01/08-faas.md
+        - file: day01/09-containers.md
+        - file: day01/10-day01recap.md
+    - title: Day 2 — Containers & Docker
+      children:
+        - file: day02/index.md
+        - file: day02/01-containers-and-docker.md
+        - file: day02/02-storage-and-images.md
+        - file: day02/03-running-containers.md
+        - file: day02/04-persisting-data-and-web-ui.md
+        - file: day02/05-application-containerisation.md
+        - file: day02/06-docker-compose.md
+        - file: day02/07-lab.md
+        - file: day02/08-cheatsheet.md
+    - title: Day 3 - Kubernetes and Helm
+      children:
+        - file: day03/index.md
+        - file: day03/01-kubernetes-user-perspective.md
+        - file: day03/02-interacting-with-a-cluster.md
+        - file: day03/03-deploying-an-application.md
+        - file: day03/04-exposing-an-application.md
+        - file: day03/05-exposing-an-application-with-gateway-api.md
+        - file: day03/06-cert-manager-and-dns.md
+        - file: day03/07-scaling.md
+        - file: day03/08-configuration-and-secrets.md
+        - file: day03/09-persistent-storage.md
+        - file: day03/10-from-compose-to-kubernetes.md
+        - file: day03/11-gpu-workloads-and-scheduling.md
+        - file: day03/12-helm-jupyterhub.md
+        - file: day03/13-cheatsheet.md
+    - title: Day 4 — Git, CI/CD & GitOps
+      children:
+        - file: day04/index.md
+        - file: day04/01-git.md
+        - file: day04/02-ci-cd.md
+        - file: day04/03-gitlab-ci.md
+        - file: day04/04-pipeline-security.md
+        - file: day04/05-releases.md
+        - file: day04/06-gitops.md
+        - file: day04/07-fleet.md
+        - file: day04/08-fleet-manifests-vs-helm.md
+        - file: day04/08b-cookiecutter-and-dagger.md
+        - file: day04/09-cheatsheet.md
+    - title: "Day 5 - Advanced topics: Monitoring, Security"
+      children:
+        - file: day05/index.md
+        - file: day05/01-monitoring-prometheus-grafana-python-sdk.md
+        - file: day05/02-security-fundamentals.md
+        - file: day05/03-group-project.md
+
+site:
+  template: book-theme
+  options:
+    favicon: _static/logo.ico
+    logo: _static/logo.png
+  parts:
+    footer: footer.md
